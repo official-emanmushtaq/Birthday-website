@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #090308;
+    color: white;
+    overflow: hidden;
+}
+
+/* ---------- COMMON ---------- */
+
+.screen {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 1.2s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- DOOR ---------- */
+
+#doorScreen {
+    background:
+        radial-gradient(circle at center, #351322 0%, #12050c 45%, #030104 100%);
+    flex-direction: column;
+}
+
+.door-frame {
+    position: relative;
+    width: 280px;
+    height: 430px;
+    perspective: 1200px;
+}
+
+.door {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #4a1725, #16060c);
+    border: 8px solid #8c5260;
+    border-radius: 8px;
+    transform-origin: left;
+    transition: transform 2.5s cubic-bezier(.77,0,.18,1);
+    box-shadow: 0 0 40px rgba(255, 80, 130, .25);
+    z-index: 2;
+}
+
+.door::before {
+    content: "";
+    position: absolute;
+    inset: 25px;
+    border: 2px solid #b77887;
+}
+
+.door::after {
+    content: "♥";
+    position: absolute;
+    font-size: 65px;
+    color: #d99aa8;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.door.open {
+    transform: rotateY(-110deg);
+}
+
+.knob {
+    position: absolute;
+    right: 30px;
+    top: 52%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #e4b27a;
+}
+
+.door-text {
+    margin-top: 35px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    opacity: .9;
+}
+
+.open-btn {
+    margin-top: 20px;
+    padding: 14px 28px;
+    border: 1px solid #d99aa8;
+    background: transparent;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: .4s;
+}
+
+.open-btn:hover {
+    background: #8d304c;
+}
+
+/* ---------- FLOWERS ---------- */
+
+#flowerScreen {
+    background:
+        radial-gradient(circle, #4b1326 0%, #17050d 45%, #050106 100%);
+    flex-direction: column;
+}
+
+.flower-title {
+    font-size: clamp(30px, 7vw, 65px);
+    font-weight: normal;
+    letter-spacing: 3px;
+}
+
+.flower-subtitle {
+    margin-top: 15px;
+    font-size: 18px;
+    opacity: .75;
+}
+
+.continue-btn,
+.surprise-btn {
+    margin-top: 35px;
+    padding: 15px 32px;
+    border: none;
+    border-radius: 30px;
+    background: #9b3153;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 0 25px rgba(220, 60, 110, .35);
+}
+
+/* Falling petals */
+
+.petal {
+    position: fixed;
+    top: -50px;
+    font-size: 22px;
+    animation: fall linear forwards;
+    pointer-events: none;
+    z-index: 10;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: .2;
+    }
+}
+
+/* ---------- LANGUAGE SCREEN ---------- */
+
+#languageScreen {
+    background:
+        radial-gradient(circle at center, #35101f, #080207 70%);
+    flex-direction: column;
+    padding: 25px;
+}
+
+.language {
+    font-size: 15px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    opacity: .65;
+    margin-bottom: 30px;
+}
+
+.typing {
+    max-width: 850px;
+    font-size: clamp(24px, 5vw, 48px);
+    line-height: 1.5;
+    min-height: 180px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: white;
+    margin-left: 5px;
+    animation: blink .8s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.next-language {
+    margin-top: 30px;
+    padding: 12px 25px;
+    border: 1px solid #c16b82;
+    background: transparent;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+/* ---------- FINAL ---------- */
+
+#finalScreen {
+    background:
+        radial-gradient(circle at center, #59152f 0%, #17040e 50%, #030103 100%);
+    flex-direction: column;
+    padding: 25px;
+}
+
+.final-heart {
+    font-size: 100px;
+    animation: heartbeat 1.4s infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.18); }
+}
+
+.final-title {
+    font-size: clamp(34px, 8vw, 75px);
+    font-weight: normal;
+}
+
+.final-text {
+    margin-top: 20px;
+    max-width: 700px;
+    font-size: 20px;
+    line-height: 1.7;
+    opacity: .85;
+}
+
+/* ---------- LETTER ---------- */
+
+#letterScreen {
+    background: #090308;
+    overflow-y: auto;
+    padding: 40px 20px;
+    align-items: flex-start;
+}
+
+.letter {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 40px 30px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 20px;
+    line-height: 1.9;
+    font-size: 18px;
+    box-shadow: 0 0 50px rgba(160,40,80,.2);
+}
+
+.letter h2 {
+    text-align: center;
+    font-weight: normal;
+    font-size: 35px;
+    margin-bottom: 25px;
+}
+
+.signature {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 22px;
+}
+
+/* ---------- MUSIC ---------- */
+
+.music-btn {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 100;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.4);
+    background: rgba(0,0,0,.35);
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+    <!-- Replace this with your own music file -->
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">♫</button>
+
+<!-- ================= DOOR ================= -->
+
+<section id="doorScreen" class="screen">
+
+    <div class="door-frame">
+
+        <div class="door" id="door">
+            <div class="knob"></div>
+        </div>
+
+    </div>
+
+    <div class="door-text">
+        Someone special is waiting for you...
+    </div>
+
+    <button class="open-btn" onclick="openDoor()">
+        Open the door ❤️
+    </button>
+
+</section>
+
+
+<!-- ================= FLOWERS ================= -->
+
+<section id="flowerScreen" class="screen hidden">
+
+    <div>
+
+        <div class="flower-title">
+            Welcome, My Love...
+        </div>
+
+        <div class="flower-subtitle">
+            I made this little world just for you. 🌹
+        </div>
+
+        <button class="continue-btn" onclick="startLanguages()">
+            Continue →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LANGUAGES ================= -->
+
+<section id="languageScreen" class="screen hidden">
+
+    <div class="language" id="languageName">
+        English
+    </div>
+
+    <div class="typing">
+        <span id="typedText"></span>
+        <span class="cursor"></span>
+    </div>
+
+    <button class="next-language" onclick="nextLanguage()">
+        Continue ❤️
+    </button>
+
+</section>
+
+
+<!-- ================= FINAL ================= -->
+
+<section id="finalScreen" class="screen hidden">
+
+    <div class="final-heart">
+        ❤️
+    </div>
+
+    <div class="final-title">
+        I Choose You.
+    </div>
+
+    <div class="final-text">
+        Three languages.<br>
+        One feeling.<br><br>
+
+        If I had to choose you in every lifetime,
+        I would still choose you.
+        <br><br>
+
+        Happy Birthday, my love. ❤️
+    </div>
+
+    <button class="surprise-btn" onclick="showLetter()">
+        One Last Surprise 💌
+    </button>
+
+</section>
+
+
+<!-- ================= LETTER ================= -->
+
+<section id="letterScreen" class="screen hidden">
+
+    <div class="letter">
+
+        <h2>To My Love ❤️</h2>
+
+        <p>
+            Happy Birthday to the person who makes my world
+            a little softer, brighter and happier.
+        </p>
+
+        <br>
+
+        <p>
+            I don't know what the future has written for us,
+            but if I could choose one person to laugh with,
+            annoy, travel with, grow with and make countless
+            memories with...
+        </p>
+
+        <br>
+
+        <p>
+            I would choose you.
+            Again and again.
+            In every version of this life.
+        </p>
+
+        <br>
+
+        <p>
+            May Allah fill your life with happiness,
+            success, peace and everything your heart secretly
+            wishes for.
+        </p>
+
+        <br>
+
+        <p>
+            And may I always have the privilege of seeing
+            that beautiful smile of yours.
+        </p>
+
+        <div class="signature">
+            Forever yours,<br>
+            ❤️ Your Girl
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* =====================================
+   CHANGE THESE THREE WISHES
+===================================== */
+
+const wishes = [
+
+    {
+        language: "English",
+        text:
+        "Happy Birthday, my love. In a world full of people, somehow my heart found you. And today, I just want you to know how incredibly special you are to me. ❤️"
+    },
+
+    {
+        language: "Italian",
+        text:
+        "Buon compleanno, amore mio. Tra milioni di persone, il mio cuore ha scelto proprio te. Sei una delle cose più belle che la vita mi abbia regalato. ❤️"
+    },
+
+    {
+        language: "German",
+        text:
+        "Alles Gute zum Geburtstag, mein Schatz. Von allen Menschen auf dieser Welt würde ich immer wieder dich wählen. Du bist mein Lieblingsmensch. ❤️"
+    }
+
+];
+
+let currentLanguage = 0;
+let typingTimer;
+
+
+/* =====================================
+   DOOR
+===================================== */
+
+function openDoor() {
+
+    document.getElementById("door").classList.add("open");
+
+    startMusic();
+
+    setTimeout(() => {
+
+        document.getElementById("doorScreen")
+        .classList.add("hidden");
+
+        document.getElementById("flowerScreen")
+        .classList.remove("hidden");
+
+        startFlowers();
+
+    }, 1800);
+}
+
+
+/* =====================================
+   FLOWERS
+===================================== */
+
+function startFlowers() {
+
+    setInterval(() => {
+
+        const petal = document.createElement("div");
+
+        petal.className = "petal";
+
+        const flowers = ["🌹","🌸","🌷","💮","🌺"];
+
+        petal.innerHTML =
+            flowers[Math.floor(Math.random() * flowers.length)];
+
+        petal.style.left =
+            Math.random() * 100 + "vw";
+
+        petal.style.animationDuration =
+            (4 + Math.random() * 5) + "s";
+
+        petal.style.fontSize =
+            (15 + Math.random() * 25) + "px";
+
+        document.body.appendChild(petal);
+
+        setTimeout(() => {
+            petal.remove();
+        }, 10000);
+
+    }, 180);
+}
+
+
+/* =====================================
+   LANGUAGES
+===================================== */
+
+function startLanguages() {
+
+    document.getElementById("flowerScreen")
+    .classList.add("hidden");
+
+    document.getElementById("languageScreen")
+    .classList.remove("hidden");
+
+    showLanguage();
+
+}
+
+
+function showLanguage() {
+
+    clearInterval(typingTimer);
+
+    const language =
+        document.getElementById("languageName");
+
+    const text =
+        document.getElementById("typedText");
+
+    language.innerText =
+        wishes[currentLanguage].language;
+
+    text.innerText = "";
+
+    let i = 0;
+
+    typingTimer = setInterval(() => {
+
+        text.innerText +=
+            wishes[currentLanguage].text.charAt(i);
+
+        i++;
+
+        if (i >= wishes[currentLanguage].text.length) {
+            clearInterval(typingTimer);
+        }
+
+    }, 45);
+}
+
+
+function nextLanguage() {
+
+    currentLanguage++;
+
+    if (currentLanguage < wishes.length) {
+
+        showLanguage();
+
+    } else {
+
+        document.getElementById("languageScreen")
+        .classList.add("hidden");
+
+        document.getElementById("finalScreen")
+        .classList.remove("hidden");
+
+        createExtraPetals();
+
+    }
+}
+
+
+/* =====================================
+   EXTRA ROMANTIC PETALS
+===================================== */
+
+function createExtraPetals() {
+
+    for (let i = 0; i < 60; i++) {
+
+        setTimeout(() => {
+
+            const petal =
+                document.createElement("div");
+
+            petal.className = "petal";
+
+            petal.innerHTML = "🌹";
+
+            petal.style.left =
+                Math.random() * 100 + "vw";
+
+            petal.style.animationDuration =
+                (3 + Math.random() * 4) + "s";
+
+            document.body.appendChild(petal);
+
+        }, i * 80);
+
+    }
+}
+
+
+/* =====================================
+   LETTER
+===================================== */
+
+function showLetter() {
+
+    document.getElementById("finalScreen")
+    .classList.add("hidden");
+
+    document.getElementById("letterScreen")
+    .classList.remove("hidden");
+
+}
+
+
+/* =====================================
+   MUSIC
+===================================== */
+
+function startMusic() {
+
+    const music =
+        document.getElementById("music");
+
+    music.volume = 0.35;
+
+    music.play().catch(() => {});
+
+}
+
+
+function toggleMusic() {
+
+    const music =
+        document.getElementById("music");
+
+    if (music.paused) {
+
+        music.play();
+
+    } else {
+
+        music.pause();
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
